@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Infografis: Rangkaian Penguat Medis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-slate-100 text-slate-800 p-4 md:p-8">
+    <main class="max-w-7xl mx-auto">
+      <header class="text-center mb-12">
+        <h1 class="text-4xl md:text-5xl font-bold text-blue-600 mb-4">
+          Infografis: Rangkaian Penguat Medis
+        </h1>
+        <p class="text-lg text-slate-600 max-w-3xl mx-auto">
+          Visualisasi konsep kunci dari penguat di peralatan kesehatan,
+          berdasarkan rangkuman "Bab 2 Rangkaian Penguat".
+        </p>
+      </header>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <h2 class="text-2xl font-bold text-blue-600 mb-4">
+            1. Masalah Utama: Sinyal vs. Noise
+          </h2>
+          <p class="text-slate-600 mb-6">
+            Penguat medis menghadapi tantangan besar: sinyal tubuh yang sangat
+            lemah harus "diselamatkan" dari noise lingkungan yang sangat kuat.
+          </p>
+          <div class="flex items-center justify-around gap-4">
+            <div class="text-center p-4 rounded-lg bg-teal-50 w-1/2">
+              <span class="text-5xl" role="img" aria-label="Sinyal Jantung"
+                >❤️</span
+              >
+              <h3 class="text-xl font-semibold text-teal-600 mt-2">
+                Sinyal Tubuh
+              </h3>
+              <p class="text-2xl font-bold text-teal-500">SANGAT LEMAH</p>
+              <p class="text-sm text-slate-500">(mikrovolt - milivolt)</p>
+            </div>
+            <div class="text-center p-4 rounded-lg bg-red-50 w-1/2">
+              <span class="text-5xl" role="img" aria-label="Noise Listrik"
+                >⚡</span
+              >
+              <h3 class="text-xl font-semibold text-red-600 mt-2">
+                Noise Lingkungan
+              </h3>
+              <p class="text-2xl font-bold text-red-500">SANGAT KUAT</p>
+              <p class="text-sm text-slate-500">(Listrik PLN, dll.)</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <h2 class="text-2xl font-bold text-blue-600 mb-4">
+            2. Solusi Kunci: CMRR
+          </h2>
+          <p class="text-slate-600 mb-4">
+            CMRR (Common Mode Rejection Ratio) adalah kemampuan penguat untuk
+            **memperkuat** sinyal biologis (A<sub>diff</sub>) sambil **menolak**
+            noise (A<sub>cm</sub>).
+          </p>
+          <div class="w-full max-w-xs mx-auto h-64 md:h-72 relative">
+            <canvas id="cmrrChart"></canvas>
+          </div>
+          <p class="text-center text-sm text-slate-500 mt-2">
+            Perbandingan ideal: Penguat fokus hampir 100% pada sinyal yang
+            diinginkan.
+          </p>
+        </div>
+
+        <div class="bg-white p-6 rounded-lg shadow-md md:col-span-2">
+          <h2 class="text-2xl font-bold text-blue-600 mb-6">
+            3. Alur Kerja Alat (Contoh: Stetoskop Digital 🩺)
+          </h2>
+          <p class="text-slate-600 mb-8 text-center max-w-2xl mx-auto">
+            Sinyal diolah langkah demi langkah, dari getaran lemah menjadi suara
+            yang jernih dan kuat untuk didengar atau dianalisis.
+          </p>
+          <div
+            class="flex flex-col md:flex-row items-center justify-between gap-4"
+          >
+            <div
+              class="flex flex-col items-center text-center p-4 rounded-lg bg-slate-50 w-full md:w-1/5"
+            >
+              <span
+                class="text-3xl bg-blue-100 text-blue-600 w-12 h-12 rounded-full flex items-center justify-center font-bold mb-2"
+                >1</span
+              >
+              <h3 class="font-semibold">Sensor (Mikrofon)</h3>
+              <p class="text-sm text-slate-500">
+                Menangkap getaran suara (sinyal lemah)
+              </p>
+            </div>
+
+            <span
+              class="text-3xl text-slate-400 transform rotate-90 md:rotate-0"
+              role="img"
+              aria-label="panah"
+              >→</span
+            >
+
+            <div
+              class="flex flex-col items-center text-center p-4 rounded-lg bg-slate-50 w-full md:w-1/5"
+            >
+              <span
+                class="text-3xl bg-blue-100 text-blue-600 w-12 h-12 rounded-full flex items-center justify-center font-bold mb-2"
+                >2</span
+              >
+              <h3 class="font-semibold">Pre-Amplifier</h3>
+              <p class="text-sm text-slate-500">Penguatan awal (10x-50x)</p>
+            </div>
+
+            <span
+              class="text-3xl text-slate-400 transform rotate-90 md:rotate-0"
+              role="img"
+              aria-label="panah"
+              >→</span
+            >
+
+            <div
+              class="flex flex-col items-center text-center p-4 rounded-lg bg-slate-50 w-full md:w-1/5"
+            >
+              <span
+                class="text-3xl bg-blue-100 text-blue-600 w-12 h-12 rounded-full flex items-center justify-center font-bold mb-2"
+                >3</span
+              >
+              <h3 class="font-semibold">Filter Aktif</h3>
+              <p class="text-sm text-slate-500">
+                Membersihkan noise (20Hz-1kHz)
+              </p>
+            </div>
+
+            <span
+              class="text-3xl text-slate-400 transform rotate-90 md:rotate-0"
+              role="img"
+              aria-label="panah"
+              >→</span
+            >
+
+            <div
+              class="flex flex-col items-center text-center p-4 rounded-lg bg-slate-50 w-full md:w-1/5"
+            >
+              <span
+                class="text-3xl bg-blue-100 text-blue-600 w-12 h-12 rounded-full flex items-center justify-center font-bold mb-2"
+                >4</span
+              >
+              <h3 class="font-semibold">Main Amplifier</h3>
+              <p class="text-sm text-slate-500">Penguatan akhir (daya)</p>
+            </div>
+
+            <span
+              class="text-3xl text-slate-400 transform rotate-90 md:rotate-0"
+              role="img"
+              aria-label="panah"
+              >→</span
+            >
+
+            <div
+              class="flex flex-col items-center text-center p-4 rounded-lg bg-slate-50 w-full md:w-1/5"
+            >
+              <span
+                class="text-3xl bg-blue-100 text-blue-600 w-12 h-12 rounded-full flex items-center justify-center font-bold mb-2"
+                >5</span
+              >
+              <h3 class="font-semibold">Output (Earphone)</h3>
+              <p class="text-sm text-slate-500">Sinyal siap didengar</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <h2 class="text-2xl font-bold text-blue-600 mb-4">
+            4. Memahami Musuh: "NOISE"
+          </h2>
+          <p class="text-slate-600 mb-4">
+            Noise adalah sinyal acak yang mengganggu. Kita mengukurnya dengan
+            RMS dan salah satu sumber terbesarnya adalah komponen itu sendiri
+            (Thermal Noise).
+          </p>
+
+          <div class="bg-yellow-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-yellow-800">Kenapa "RMS"? 🚩</h3>
+            <p class="text-sm text-yellow-700">
+              Sinyal acak (kadang +/kadang -) punya rata-rata 0. RMS adalah cara
+              adil menghitung "energi rata-rata" sinyal acak tersebut.
+            </p>
+            <p class="text-sm font-semibold text-yellow-800 mt-2">
+              Square (Kuadrat) → Mean (Rata-rata) → Root (Akar)
+            </p>
+          </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <h2 class="text-2xl font-bold text-blue-600 mb-4">
+            Faktor Peningkat Thermal Noise
+          </h2>
+          <p class="text-slate-600 mb-4">
+            Noise bawaan (thermal) dari resistor akan semakin buruk jika tiga
+            faktor ini meningkat.
+          </p>
+          <div class="w-full max-w-md mx-auto h-72 md:h-80 relative">
+            <canvas id="thermalNoiseChart"></canvas>
+          </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-lg shadow-md md:col-span-2">
+          <h2 class="text-2xl font-bold text-blue-600 mb-6">
+            5. Contoh Jenis Penguat & Fungsinya
+          </h2>
+          <p class="text-slate-600 mb-6 text-center">
+            Sinyal yang berbeda (Tegangan vs. Arus) membutuhkan penguat dengan
+            fungsi yang berbeda pula.
+          </p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="border border-slate-200 rounded-lg p-4 bg-slate-50">
+              <h3 class="text-xl font-semibold text-blue-700">
+                ECG (Jantung) ❤️
+              </h3>
+              <p class="text-sm text-slate-500 mb-2">
+                Sinyal: **Tegangan** (0.5–4 mV)
+              </p>
+              <hr class="my-2" />
+              <p class="font-semibold">Penguat: Instrumentation Amp</p>
+              <p class="text-sm text-slate-600">
+                Fungsi: Memperkuat sinyal Tegangan yang sangat lemah dengan CMRR
+                tinggi.
+              </p>
+            </div>
+
+            <div class="border border-slate-200 rounded-lg p-4 bg-slate-50">
+              <h3 class="text-xl font-semibold text-teal-700">
+                PPG (Detak Nadi) 💓
+              </h3>
+              <p class="text-sm text-slate-500 mb-2">
+                Sinyal: **Arus** (dari Fotodioda)
+              </p>
+              <hr class="my-2" />
+              <p class="font-semibold">Penguat: Transimpedance Amp (TIA)</p>
+              <p class="text-sm text-slate-600">
+                Fungsi: Mengubah sinyal Arus super kecil dari sensor cahaya
+                menjadi Tegangan.
+              </p>
+            </div>
+
+            <div class="border border-slate-200 rounded-lg p-4 bg-slate-50">
+              <h3 class="text-xl font-semibold text-yellow-700">
+                EMG (Otot) 💪
+              </h3>
+              <p class="text-sm text-slate-500 mb-2">
+                Sinyal: **Tegangan** (0.1–5 mV)
+              </p>
+              <hr class="my-2" />
+              <p class="font-semibold">Penguat: Op-Amp + Filter Aktif</p>
+              <p class="text-sm text-slate-600">
+                Fungsi: Memperkuat dan memfilter sinyal otot yang sangat rentan
+                terhadap noise.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-lg shadow-md md:col-span-2">
+          <h2 class="text-2xl font-bold text-blue-600 mb-6">
+            6. Syarat Wajib Penguat Medis
+          </h2>
+          <p class="text-slate-600 mb-6">
+            Selain CMRR tinggi dan filter, ada syarat kritis lain untuk keamanan
+            dan akurasi.
+          </p>
+          <ul class="space-y-4">
+            <li class="flex items-start gap-4 p-4 bg-blue-50 rounded-lg">
+              <span class="text-3xl" role="img" aria-label="perisai">🛡️</span>
+              <div>
+                <h3 class="font-semibold text-blue-800">
+                  Isolasi Listrik Baik
+                </h3>
+                <p class="text-sm text-blue-700">
+                  Syarat **keamanan pasien** nomor satu. Memisahkan pasien dari
+                  listrik PLN untuk mencegah risiko sengatan listrik.
+                </p>
+              </div>
+            </li>
+            <li class="flex items-start gap-4 p-4 bg-teal-50 rounded-lg">
+              <span class="text-3xl" role="img" aria-label="diam">🤫</span>
+              <div>
+                <h3 class="font-semibold text-teal-800">Noise Bawaan Rendah</h3>
+                <p class="text-sm text-teal-700">
+                  Penguat itu sendiri tidak boleh menghasilkan banyak noise
+                  (seperti *thermal noise*) yang dapat menutupi sinyal asli.
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <footer class="text-center mt-12 py-6 border-t border-slate-300">
+        <p class="text-sm text-slate-500">
+          Infografis ini dibuat secara otomatis berdasarkan rangkuman
+          "Ringkasan-Penguat-Medis.md".
+        </p>
+      </footer>
+    </main>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const palette = {
+          blue: "#007BFF",
+          teal: "#00C49F",
+          yellow: "#FFC107",
+          red: "#DC3545",
+          gray: "#6C757D",
+        };
+
+        function wrapLabel(str, maxWidth) {
+          if (str.length <= maxWidth) {
+            return str;
+          }
+          const words = str.split(" ");
+          const lines = [];
+          let currentLine = "";
+
+          words.forEach((word) => {
+            if ((currentLine + word).length > maxWidth) {
+              lines.push(currentLine.trim());
+              currentLine = "";
+            }
+            currentLine += word + " ";
+          });
+          lines.push(currentLine.trim());
+          return lines;
+        }
+
+        function tooltipTitleCallback(tooltipItems) {
+          const item = tooltipItems[0];
+          let label = item.chart.data.labels[item.dataIndex];
+          if (Array.isArray(label)) {
+            return label.join(" ");
+          } else {
+            return label;
+          }
+        }
+
+        const chartOptionsBase = {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: "bottom",
+              labels: {
+                font: {
+                  family: "'Inter', sans-serif",
+                },
+              },
+            },
+            tooltip: {
+              callbacks: {
+                title: tooltipTitleCallback,
+              },
+              titleFont: {
+                family: "'Inter', sans-serif",
+              },
+              bodyFont: {
+                family: "'Inter', sans-serif",
+              },
+            },
+          },
+        };
+
+        const cmrrCtx = document.getElementById("cmrrChart");
+        if (cmrrCtx) {
+          new Chart(cmrrCtx, {
+            type: "doughnut",
+            data: {
+              labels: ["Sinyal Diperkuat", "Noise Ditolak"],
+              datasets: [
+                {
+                  label: "Perbandingan Penguatan",
+                  data: [99.9, 0.1],
+                  backgroundColor: [palette.blue, palette.red],
+                  borderColor: "#ffffff",
+                  borderWidth: 2,
+                },
+              ],
+            },
+            options: {
+              ...chartOptionsBase,
+              cutout: "60%",
+            },
+          });
+        }
+
+        const thermalNoiseCtx = document.getElementById("thermalNoiseChart");
+        if (thermalNoiseCtx) {
+          new Chart(thermalNoiseCtx, {
+            type: "bar",
+            data: {
+              labels: [
+                "Resistansi (R) Tinggi",
+                "Suhu (T) Panas",
+                "Bandwidth (B) Lebar",
+              ].map((label) => wrapLabel(label, 16)),
+              datasets: [
+                {
+                  label: "Kontribusi Noise (Ilustrasi)",
+                  data: [20, 15, 30],
+                  backgroundColor: [palette.yellow, palette.red, palette.teal],
+                  borderRadius: 4,
+                },
+              ],
+            },
+            options: {
+              ...chartOptionsBase,
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  title: {
+                    display: true,
+                    text: "Tingkat Noise (Relatif)",
+                  },
+                },
+              },
+              plugins: {
+                ...chartOptionsBase.plugins,
+                legend: {
+                  display: false,
+                },
+              },
+            },
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
